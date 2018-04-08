@@ -1,0 +1,59 @@
+plugins {
+    id "java"
+    id "groovy"
+    id "jacoco"
+    id "maven-publish"
+	id 'application'
+    id "com.github.johnrengelman.shadow" version "2.0.2"
+}
+
+group 'uj.jwzp.w2'
+
+sourceCompatibility = 1.8
+
+mainClassName = "uj.jwzp.w2.e3.launchers.SpringMain"
+
+jar {
+    manifest {
+        attributes("Implementation-Title": project.name,
+            "Main-Class": mainClassName)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.0"
+}
+
+dependencies {
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
+    compile 'ch.qos.logback.contrib:logback-jackson:0.1.5'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    compile 'org.projectlombok:lombok:1.16.20'
+    testCompile(
+            //JUnit
+            'junit:junit:4.12',
+
+            //Rich asserting: AssertJ
+            'org.assertj:assertj-core:3.9.0',
+
+            //Mocks: Mockito
+            'org.mockito:mockito-core:2.8.9'
+    )
+    compile 'org.springframework:spring-context:5.0.4.RELEASE'
+    compile 'net.sf.jopt-simple:jopt-simple:6.0-alpha-2'
+}
+
+build.dependsOn(tasks.jacocoTestReport)
