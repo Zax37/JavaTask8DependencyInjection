@@ -8,9 +8,6 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd-HH-mm-ss}.log</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
             <!-- how many days to keep the files -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
@@ -19,7 +16,7 @@
         </triggeringPolicy>
     </appender>
 
-    <logger name="uj.jwzp.w2.e3.logic.TransactionsGenerator" level="DEBUG">
+    <logger name="uj.jwzp.w2.e3.logic.TransactionsGenerator" level="TRACE">
         <appender-ref ref="FILE" />
     </logger>
 
@@ -33,10 +30,13 @@
             <includeContextName>false</includeContextName>
             <includeThreadName>false</includeThreadName>
         </layout>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
     </appender>
 
-    <!-- By default, the level of the root level is set to DEBUG -->
-    <root level="ERROR">
-        <appender-ref ref="STDOUT" />
+    <root level="TRACE">
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

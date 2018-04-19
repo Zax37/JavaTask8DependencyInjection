@@ -31,11 +31,11 @@ public class CSVItemsReaderTest {
                     .thenReturn(CORRECT_CSV_PRODUCT1)
                     .thenReturn(null);
 
-            List<Item> uut = CSVItemsReader.getFromCSV(mockedReader);
-            Assert.assertEquals(TEST_PRODUCTS_COUNT, uut.size());
+            CSVItemsReader uut = new CSVItemsReader(mockedReader);
+            List<Item> list = uut.read();
 
-            Item product1 = uut.get(0);
-
+            Assert.assertEquals(TEST_PRODUCTS_COUNT, list.size());
+            Item product1 = list.get(0);
             Assert.assertEquals(TEST_PRODUCT1_NAME, product1.getName());
             Assert.assertEquals(TEST_PRODUCT1_PRICE, product1.getPrice());
         } catch (IOException e) {
@@ -52,7 +52,8 @@ public class CSVItemsReaderTest {
                 .thenReturn(INVALID_CSV_HEADER1)
                 .thenReturn(null);
 
-        CSVItemsReader.getFromCSV(mockedReader);
+        CSVItemsReader uut = new CSVItemsReader(mockedReader);
+        List<Item> list = uut.read();
     }
 
     @Test(expected = IOException.class)
@@ -63,7 +64,8 @@ public class CSVItemsReaderTest {
                 .thenReturn(INVALID_CSV_HEADER2)
                 .thenReturn(null);
 
-        CSVItemsReader.getFromCSV(mockedReader);
+        CSVItemsReader uut = new CSVItemsReader(mockedReader);
+        List<Item> list = uut.read();
     }
 
     @Test(expected = IOException.class)
@@ -75,6 +77,7 @@ public class CSVItemsReaderTest {
                 .thenReturn(INVALID_CSV_PRODUCT1)
                 .thenReturn(null);
 
-        CSVItemsReader.getFromCSV(mockedReader);
+        CSVItemsReader uut = new CSVItemsReader(mockedReader);
+        List<Item> list = uut.read();
     }
 }

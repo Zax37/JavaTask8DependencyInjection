@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.UnexpectedException;
 
-public class TransactionsGeneratorTest {
+/*public class TransactionsGeneratorTest {
     @Test
     public void shouldGetDefaultOptions() {
         String[] args = { };
@@ -86,3 +86,4 @@ public class TransactionsGeneratorTest {
         }
     }
 }
+*/
