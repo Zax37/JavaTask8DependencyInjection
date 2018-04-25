@@ -19,7 +19,7 @@ public class DateRangeConverter implements
 
     @Override
     public DateRangeProperty convert(String value) {
-        if (value.length()%2 != 1 ) { //two dates of same format, separated by :
+        if (value.length()%2 != 1 || value.charAt(value.length()/2) != ':') { //two dates of same format, separated by :
             throw new ValueConversionException("Couldn't parse this DateRange: "+value);
         }
         final int lengthOfSingle = (value.length() - 1) / 2;
@@ -27,14 +27,6 @@ public class DateRangeConverter implements
                 ZonedDateTime.parse(value.substring(0, lengthOfSingle), DATE_TIME_FORMATTER),
                 ZonedDateTime.parse(value.substring(lengthOfSingle+1, lengthOfSingle*2+1), DATE_TIME_FORMATTER)
         );
-    }
-
-    public static String revert(DateRangeProperty value) {
-        return new StringBuilder()
-                .append(value.getFrom().format(DATE_TIME_FORMATTER))
-                .append(":")
-                .append(value.getTo().format(DATE_TIME_FORMATTER))
-                .toString();
     }
 
     @Override

@@ -12,7 +12,7 @@ public class IntRangeProperty implements Property {
 
     @Override
     public String toString() {
-        return IntRangeConverter.revert(this);
+        return from + ":" + to;
     }
 
     public int random() {

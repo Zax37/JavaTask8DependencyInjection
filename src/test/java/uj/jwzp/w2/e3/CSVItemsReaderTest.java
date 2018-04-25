@@ -23,15 +23,13 @@ public class CSVItemsReaderTest {
 
     @Test
     public void shouldReadCorrectCSV() {
-        try {
-            BufferedReader mockedReader = Mockito.mock(BufferedReader.class);
-
+        BufferedReader mockedReader = Mockito.mock(BufferedReader.class);
+        try (CSVItemsReader uut = new CSVItemsReader(mockedReader)){
             Mockito.when(mockedReader.readLine())
                     .thenReturn(CORRECT_CSV_HEADER)
                     .thenReturn(CORRECT_CSV_PRODUCT1)
                     .thenReturn(null);
 
-            CSVItemsReader uut = new CSVItemsReader(mockedReader);
             List<Item> list = uut.read();
 
             Assert.assertEquals(TEST_PRODUCTS_COUNT, list.size());
@@ -54,6 +52,7 @@ public class CSVItemsReaderTest {
 
         CSVItemsReader uut = new CSVItemsReader(mockedReader);
         List<Item> list = uut.read();
+        uut.close();
     }
 
     @Test(expected = IOException.class)
@@ -66,6 +65,7 @@ public class CSVItemsReaderTest {
 
         CSVItemsReader uut = new CSVItemsReader(mockedReader);
         List<Item> list = uut.read();
+        uut.close();
     }
 
     @Test(expected = IOException.class)
@@ -79,5 +79,6 @@ public class CSVItemsReaderTest {
 
         CSVItemsReader uut = new CSVItemsReader(mockedReader);
         List<Item> list = uut.read();
+        uut.close();
     }
 }

@@ -1,7 +1,9 @@
 package uj.jwzp.w2.e3.model;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Value;
+import lombok.experimental.NonFinal;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -11,6 +13,7 @@ import java.util.Map;
 
 @Builder
 @Value
+@NonFinal
 public class Transaction {
     private final static String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT_PATTERN);

@@ -1,5 +1,6 @@
 package uj.jwzp.w2.e3.logic.converter;
 
+import joptsimple.util.PathConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
@@ -27,5 +28,10 @@ public class ConversionServiceProvider {
         converters.add(new DateRangeConverter());
 
         return converters;
+    }
+
+    @Bean
+    public PathConverter getPathConverter() {
+        return new PathConverter();
     }
 }

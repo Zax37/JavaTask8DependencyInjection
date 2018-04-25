@@ -6,6 +6,8 @@ import uj.jwzp.w2.e3.logic.converter.DateRangeConverter;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static uj.jwzp.w2.e3.logic.converter.DateRangeConverter.DATE_TIME_FORMATTER;
+
 @Value
 public class DateRangeProperty implements Property {
     private ZonedDateTime from;
@@ -18,7 +20,7 @@ public class DateRangeProperty implements Property {
 
     @Override
     public String toString() {
-        return DateRangeConverter.revert(this);
+        return from.format(DATE_TIME_FORMATTER) + ":" + to.format(DATE_TIME_FORMATTER);
     }
 
     public ZonedDateTime random() {

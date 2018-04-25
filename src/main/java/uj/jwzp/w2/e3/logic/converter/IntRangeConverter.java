@@ -22,14 +22,6 @@ public class IntRangeConverter implements
         );
     }
 
-    public static String revert(IntRangeProperty value) {
-        return new StringBuilder()
-                .append(value.getFrom())
-                .append(":")
-                .append(value.getTo())
-                .toString();
-    }
-
     @Override
     public Class<? extends IntRangeProperty> valueType() {
         return IntRangeProperty.class;

@@ -36,6 +36,17 @@ jacoco {
     toolVersion = "0.8.0"
 }
 
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['uj/jwzp/w2/e3/launchers',
+                                        'uj/jwzp/w2/e3/logic/beans',
+                                        'uj/jwzp/w2/e3/logic/wrappers',
+                                        'uj/jwzp/w2/e3/logic/converter/ConversionServiceProvider*'])
+        })
+    }
+}
+
 dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'ch.qos.logback.contrib:logback-json-classic:0.1.5'
