@@ -49,8 +49,8 @@ public class BulkFilesWriter {
         }
     }
 
-    public Path getFilePath(int idForFileName) {
-        return outDir.resolve(idForFileName + "." + format);
+    public String getFilePath(int idForFileName) {
+        return filesystemWrapper.resolve(outDir, idForFileName + "." + format);
     }
 
     public FileOutputStream getWriter(int idForFileName) throws IOException {

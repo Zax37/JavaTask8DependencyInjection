@@ -9,7 +9,6 @@ import uj.jwzp.w2.e3.logic.writer.BulkFilesWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -18,17 +17,7 @@ public class BulkFilesWriterTest {
     private final static String OUTPUT_PATH = "output";
     private final static String FORMAT = "xml";
     private final static int GENERATED_FILE_ID = 1;
-    private final static String EXPECTED_PATH = "output\\1.xml";
-
-    @Test
-    public void shouldGetCorrectFilePathForId() {
-        FilesystemWrapper filesystemWrapper = Mockito.mock(FilesystemWrapper.class);
-        BulkFilesWriter uut = new BulkFilesWriter(filesystemWrapper, Paths.get(OUTPUT_PATH), FORMAT);
-
-        Path result = uut.getFilePath(GENERATED_FILE_ID);
-
-        Assert.assertEquals(EXPECTED_PATH, result.toString());
-    }
+    private final static String EXPECTED_PATH = "output/1.xml";
 
     @Test
     public void shouldCreateDirectoriesIfNeeded() {
@@ -37,12 +26,13 @@ public class BulkFilesWriterTest {
 
         try {
             Mockito.when(filesystemWrapper.pathExists(Paths.get(OUTPUT_PATH))).thenReturn(false);
+            Mockito.doReturn(EXPECTED_PATH).when(filesystemWrapper).resolve(Mockito.any(), Mockito.anyString());
 
             uut.ensureOutDir();
             uut.getWriter(GENERATED_FILE_ID);
 
             Mockito.verify(filesystemWrapper, Mockito.atLeastOnce()).ensurePath(Paths.get(OUTPUT_PATH));
-            Mockito.verify(filesystemWrapper).requestFile(Paths.get(EXPECTED_PATH));
+            Mockito.verify(filesystemWrapper).requestFile(EXPECTED_PATH);
         } catch (IOException e) {
             e.printStackTrace();
             Assert.fail();
@@ -56,12 +46,13 @@ public class BulkFilesWriterTest {
 
         try {
             Mockito.when(filesystemWrapper.pathExists(Paths.get(OUTPUT_PATH))).thenReturn(true);
+            Mockito.doReturn(EXPECTED_PATH).when(filesystemWrapper).resolve(Mockito.any(), Mockito.anyString());
 
             uut.ensureOutDir();
             uut.getWriter(GENERATED_FILE_ID);
 
             Mockito.verify(filesystemWrapper, Mockito.never()).ensurePath(Paths.get(OUTPUT_PATH));
-            Mockito.verify(filesystemWrapper).requestFile(Paths.get(EXPECTED_PATH));
+            Mockito.verify(filesystemWrapper).requestFile(EXPECTED_PATH);
         } catch (IOException e) {
             e.printStackTrace();
             Assert.fail();
