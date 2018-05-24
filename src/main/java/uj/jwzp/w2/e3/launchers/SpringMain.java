@@ -1,9 +1,7 @@
 package uj.jwzp.w2.e3.launchers;
 
-import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.JOptCommandLinePropertySource;
 import org.springframework.core.env.PropertySource;
@@ -20,7 +18,7 @@ public class SpringMain {
         OptionSet options = commandLineParser.getParser().parse(args);
 
         PropertySource ps = new JOptCommandLinePropertySource(options);
-        ctx.getEnvironment().getPropertySources().addFirst(ps);
+        ctx.getEnvironment().getPropertySources().addLast(ps);
 
         TransactionsGenerator generator = (TransactionsGenerator) ctx.getBean("transactionsGenerator");
         try {

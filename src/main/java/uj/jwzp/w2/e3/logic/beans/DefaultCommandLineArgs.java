@@ -2,6 +2,7 @@ package uj.jwzp.w2.e3.logic.beans;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import uj.jwzp.w2.e3.logic.writer.TransactionWriter;
 import uj.jwzp.w2.e3.model.property.DateRangeProperty;
 import uj.jwzp.w2.e3.model.property.IntRangeProperty;
@@ -12,6 +13,9 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
 @Configuration
+@PropertySource({
+        "file:/storage/generator.properties"
+})
 public class DefaultCommandLineArgs {
     @Bean
     public IntRangeProperty getDefaultCustomerIds() {
@@ -28,7 +32,7 @@ public class DefaultCommandLineArgs {
 
     @Bean
     public Path getDefaultItemsFile() {
-        return Paths.get("items.csv");
+        return Paths.get("/storage/items.csv");
     }
 
     @Bean
