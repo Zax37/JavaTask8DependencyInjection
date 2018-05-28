@@ -3,10 +3,7 @@ build
 out
 target
 .gradle
-**/gradle
 **/*.iml
 output
 [0-9]*.json
 *.log
-gradlew
-gradlew.bat
