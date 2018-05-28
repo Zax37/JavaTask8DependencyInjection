@@ -32,7 +32,7 @@ public class SpringMain {
         }
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String request(
             //@RequestParam("id") long id
