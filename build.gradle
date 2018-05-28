@@ -70,3 +70,7 @@ dependencies {
 }
 
 build.dependsOn(tasks.jacocoTestReport)
+
+task stage {
+    dependsOn installDist
+}
