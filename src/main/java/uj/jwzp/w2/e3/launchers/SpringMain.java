@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.JOptCommandLinePropertySource;
 import org.springframework.core.env.PropertySource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uj.jwzp.w2.e3.logic.CommandLineParser;
 import uj.jwzp.w2.e3.logic.TransactionsGenerator;
 
@@ -26,5 +30,13 @@ public class SpringMain {
         } catch (IOException e) {
             log.error("Failed to generate transactions.");
         }
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public String request(
+            //@RequestParam("id") long id
+    ) {
+        return "asd";
     }
 }

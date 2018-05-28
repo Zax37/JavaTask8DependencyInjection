@@ -65,6 +65,8 @@ dependencies {
     )
     compile 'org.springframework:spring-context:5.0.4.RELEASE'
     compile 'net.sf.jopt-simple:jopt-simple:6.0-alpha-2'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.6.RELEASE'
+    compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: '2.0.2.RELEASE'
 }
 
 build.dependsOn(tasks.jacocoTestReport)
