@@ -23,9 +23,17 @@ public class DateRangeConverter implements
             throw new ValueConversionException("Couldn't parse this DateRange: "+value);
         }
         final int lengthOfSingle = (value.length() - 1) / 2;
+        String first, second;
+        if (value.charAt(0) == '"') {
+            first = value.substring(1, lengthOfSingle-1);
+            second = value.substring(lengthOfSingle+2, lengthOfSingle*2);
+        } else {
+            first = value.substring(0, lengthOfSingle);
+            second = value.substring(lengthOfSingle+1, lengthOfSingle*2+1);
+        }
         return new DateRangeProperty(
-                ZonedDateTime.parse(value.substring(0, lengthOfSingle), DATE_TIME_FORMATTER),
-                ZonedDateTime.parse(value.substring(lengthOfSingle+1, lengthOfSingle*2+1), DATE_TIME_FORMATTER)
+                ZonedDateTime.parse(first, DATE_TIME_FORMATTER),
+                ZonedDateTime.parse(second, DATE_TIME_FORMATTER)
         );
     }
 
