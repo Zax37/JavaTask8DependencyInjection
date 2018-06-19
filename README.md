@@ -2,6 +2,8 @@
 
 ## Zadanie 8 - Generator transakcji - DI
 
+(do commitu ecf192fdaca6b0bc3f3795a2e4e30b1bfcc153da - Changed way of supplying TransactionWriter.)
+
 "Generator transakcji" z poprzednich zajęć należy podzielić na komponenty (beany) / moduły w sensie DI.
 
 Mają istnieć przynajmniej 3 moduły:
@@ -43,3 +45,38 @@ Parametry:
 - outDir: katalog, do którego mają być zapisane pliki. Domyślnie aktualny katalog roboczy.
 
 - format: format generowanych plików. Do wyboru xml, json i yaml.
+
+## Zadanie 10 - Generator transakcji w Dockerze
+
+(od commitu 284a4702ba21646f521b3be77e32eee610dc18e9 - Dockerized it.)
+
+Utworzony obraz po uruchomieniu powinien odczytać parametry z pliku: /storage/generator.properties (przykład w załączniku), i wygenerować pliki z transakcjami do katalogu: /storage, po czym zakończyć swoje działanie.
+
+docker build --tag generator-transakcji .
+
+## Zadanie 12 - Broker transakcji
+
+(najnowszy commit e41c80cab76ad975315b1acb0308e2769a08158d - Queued it.)
+
+Dodatkowe parametry do linii komend:
+
+- broker tcp://localhost:616161
+
+- queue nazwa-kolejki
+
+- topic nazwa-tematu
+
+Dodatkowe uwagi: 
+
+- jeśli jest podany 'broker', to należy podać 'queue', albo 'topic', albo - jednocześnie 'queue' i 'topic'.
+
+- jeśli jest podany 'broker', to 'outDir' jest opcjonalny; może, ale nie musi zostać podany.
+
+Przykładowy obraz dockera z ActiveMQ: webcenter/activemq 
+Komenda do uruchomienia obrazu dokerowego: 
+
+- docker run --name='activemq' -it --rm -e 'ACTIVEMQ_CONFIG_MINMEMORY=512' -e 'ACTIVEMQ_CONFIG_MAXMEMORY=2048' -P webcenter/activemq:latest
+
+Po uruchomieniu maszyn zmienną broker należy ustawić w pliku /storage/generator.properties kontenera.
+
+Sam projekt uruchomić można za pomocą docker-compose.
