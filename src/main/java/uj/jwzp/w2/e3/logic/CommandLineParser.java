@@ -3,6 +3,7 @@ package uj.jwzp.w2.e3.logic;
 import joptsimple.OptionParser;
 import joptsimple.util.PathConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uj.jwzp.w2.e3.logic.beans.DefaultCommandLineArgs;
 import uj.jwzp.w2.e3.logic.converter.DateRangeConverter;
@@ -11,6 +12,8 @@ import uj.jwzp.w2.e3.model.property.DateRangeProperty;
 import uj.jwzp.w2.e3.model.property.IntRangeProperty;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import static uj.jwzp.w2.e3.logic.writer.TransactionWriter.AllowedOutputFormats;
 
@@ -28,6 +31,8 @@ public class CommandLineParser {
     private Integer defaultEventsCount;
     private Path defaultOutDir;
     private AllowedOutputFormats defaultOutFormat;
+
+    @Value("${broker}") String broker;
 
     @Autowired
     public CommandLineParser(
@@ -76,6 +81,14 @@ public class CommandLineParser {
         parser.accepts("format").withRequiredArg()
                 .ofType(AllowedOutputFormats.class)
                 .defaultsTo(defaultOutFormat);
+        if (broker == null) {
+            parser.accepts("broker").requiredUnless("outDir").withRequiredArg();
+            List<String> brokerArgs = new ArrayList<>();
+            brokerArgs.add("queue");
+            brokerArgs.add("topic");
+            parser.acceptsAll(brokerArgs)
+                    .availableIf("broker").requiredIf("broker").withRequiredArg();
+        }
         return parser;
     }
 }

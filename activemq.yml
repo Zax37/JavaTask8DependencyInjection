@@ -1,0 +1,5 @@
+activemq_base:
+  environment:
+    ACTIVEMQ_NAME: amq-topic
+    ACTIVEMQ_ADMIN_LOGIN: admin
+    ACTIVEMQ_ADMIN_PASSWORD: admin

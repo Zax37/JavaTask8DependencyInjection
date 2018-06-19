@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uj.jwzp.w2.e3.logic.reader.ItemsReader;
+import uj.jwzp.w2.e3.logic.writer.JmsPublisher;
 import uj.jwzp.w2.e3.logic.writer.TransactionWriter;
 import uj.jwzp.w2.e3.model.Item;
 import uj.jwzp.w2.e3.model.Transaction;
@@ -22,16 +23,19 @@ public class TransactionsGenerator {
     private final ItemsReader reader;
     private final TransactionWriter writer;
     private final TransactionGeneratorArgs args;
+    private final JmsPublisher publisher;
 
     @Autowired
     public TransactionsGenerator(
-        ItemsReader reader,
-        TransactionWriter writer,
-        TransactionGeneratorArgs args
+            ItemsReader reader,
+            TransactionWriter writer,
+            TransactionGeneratorArgs args,
+            JmsPublisher publisher
     ) {
         this.reader = reader;
         this.writer = writer;
         this.args = args;
+        this.publisher = publisher;
     }
 
     public Transaction getSingleRandomTransaction(List<Item> availableItems, int id) {
@@ -56,6 +60,7 @@ public class TransactionsGenerator {
             for (int i = 1; i <= args.getEventsCount(); i++) {
                 log.trace("Generating transaction " + i);
                 Transaction transaction = getSingleRandomTransaction(availableItems, i);
+                publisher.send(transaction);
                 writer.write(transaction);
             }
         } catch (IOException e) {
