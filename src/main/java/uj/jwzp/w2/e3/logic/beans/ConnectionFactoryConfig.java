@@ -16,7 +16,7 @@ import java.util.Optional;
 @Configuration
 @EnableJms
 public class ConnectionFactoryConfig {
-    @Value("${broker:null}")
+    @Value("${broker:#{null}}")
     String brokerUrl;
 
     @Value("${ACTIVEMQ_ADMIN_LOGIN}")
@@ -49,6 +49,7 @@ public class ConnectionFactoryConfig {
 
     @Bean
     public ConnectionFactory connectionFactory(){
+        if (brokerUrl == null) return null;
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(brokerUrl);
         connectionFactory.setUserName(userName);
@@ -58,6 +59,7 @@ public class ConnectionFactoryConfig {
 
     @Bean
     public JmsTemplate jmsTemplate(){
+        if (brokerUrl == null) return null;
         JmsTemplate template = new JmsTemplate();
         template.setMessageConverter(jacksonJmsMessageConverter());
         template.setConnectionFactory(connectionFactory());
