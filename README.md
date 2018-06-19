@@ -56,7 +56,7 @@ docker build --tag generator-transakcji .
 
 ## Zadanie 12 - Broker transakcji
 
-(najnowszy commit e41c80cab76ad975315b1acb0308e2769a08158d - Queued it.)
+(najnowsze commity od e41c80cab76ad975315b1acb0308e2769a08158d - Queued it.)
 
 Dodatkowe parametry do linii komend:
 
